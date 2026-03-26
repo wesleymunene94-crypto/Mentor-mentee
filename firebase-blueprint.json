@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the mentorship system (mentor, mentee, or coordinator).",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user's unique ID."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["mentor", "mentee", "coordinator"],
+          "description": "The user's role."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's full name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "bio": {
+          "type": "string",
+          "description": "A short biography."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Interests or skills selected by the user."
+        },
+        "isProfileComplete": {
+          "type": "boolean",
+          "description": "Whether the user has completed their profile setup."
+        }
+      },
+      "required": ["uid", "role", "name", "email", "isProfileComplete"]
+    },
+    "Connection": {
+      "title": "Connection",
+      "description": "A mentorship request or active connection between a mentor and mentee.",
+      "type": "object",
+      "properties": {
+        "menteeId": {
+          "type": "string",
+          "description": "The UID of the mentee."
+        },
+        "mentorId": {
+          "type": "string",
+          "description": "The UID of the mentor."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING", "ACCEPTED", "REJECTED"],
+          "description": "The status of the connection request."
+        },
+        "compatibilityScore": {
+          "type": "number",
+          "description": "The calculated compatibility score (0-100)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the request was created."
+        }
+      },
+      "required": ["menteeId", "mentorId", "status", "compatibilityScore", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "Stores user profiles."
+    },
+    "/connections/{connectionId}": {
+      "schema": {
+        "$ref": "#/entities/Connection"
+      },
+      "description": "Stores mentorship connections and requests."
+    }
+  }
+}

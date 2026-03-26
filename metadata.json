@@ -1,0 +1,5 @@
+{
+  "name": "Mentor Match",
+  "description": "A college club mentorship matching system with Firebase Auth and Firestore.",
+  "requestFramePermissions": []
+}
